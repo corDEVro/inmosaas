@@ -1,0 +1,17 @@
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: inmosaas-db
+    restart: always
+    environment:
+      POSTGRES_DB: inmosaas_db
+      POSTGRES_USER: inmosaas_user
+      POSTGRES_PASSWORD: inmosaas_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

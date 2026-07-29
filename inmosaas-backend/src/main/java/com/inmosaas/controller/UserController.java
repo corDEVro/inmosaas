@@ -1,6 +1,7 @@
 package com.inmosaas.controller;
 
-
+import com.inmosaas.dto.response.UserResponseDTO;
+import com.inmosaas.mapper.DTOMapper;
 import com.inmosaas.model.User;
 import com.inmosaas.repository.UserRepository;
 import jakarta.validation.Valid;
@@ -9,36 +10,41 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
     private final UserRepository userRepository;
+    private final DTOMapper dtoMapper;
 
-    // Inyeccion de dependencias por constructor
-    public UserController(UserRepository userRepository) {
+    // Inyectamos UserRepository y DTOMapper
+    public UserController(UserRepository userRepository, DTOMapper dtoMapper) {
         this.userRepository = userRepository;
+        this.dtoMapper = dtoMapper;
     }
 
-    // GET http://localhost:8080/api/users (Obtener todos los usuarios)
+    // GET /api/users -> Lista de usuarios mapeada a DTO
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userRepository.findAll();
+    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
+        List<UserResponseDTO> users = userRepository.findAll()
+                .stream()
+                .map(dtoMapper::toUserResponseDTO)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(users);
     }
 
-    // POST http://localhost:8080/api/users (Crear nuevo usuario)
+    // POST /api/users -> Crea usuario y devuelve UserResponseDTO sin password
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
-        // Validamos si el email ya existe en la base de datos
         if (userRepository.existsByEmail(user.getEmail())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("El email ya está registrado en el sistema");
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("El email ya está registrado");
         }
-
         User savedUser = userRepository.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+        UserResponseDTO responseDTO = dtoMapper.toUserResponseDTO(savedUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
-
 }

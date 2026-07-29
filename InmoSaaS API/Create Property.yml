@@ -1,0 +1,28 @@
+info:
+  name: Create Property
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: http://localhost:8080/api/properties/user/0baf1f81-5513-4b94-a8a0-7a78e25249cc
+  body:
+    type: json
+    data: |-
+      {
+        "title": "Ático luminoso en el centro",
+        "description": "Precioso ático reformado con terraza de 30m2 y vistas despejadas.",
+        "address": "Calle Mayor 15, 3ºA",
+        "city": "Madrid",
+        "price": 320000.00,
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "squareMeters": 110
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

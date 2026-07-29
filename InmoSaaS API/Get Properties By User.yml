@@ -1,0 +1,15 @@
+info:
+  name: Get Properties By User
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: http://localhost:8080/api/properties/user/0baf1f81-5513-4b94-a8a0-7a78e25249cc
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

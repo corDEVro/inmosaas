@@ -6,6 +6,16 @@ info:
 http:
   method: POST
   url: http://localhost:8080/api/users
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Ana Pérez",
+        "email": "ana-sin-arroba-inmosaas.com",
+        "password": "password123",
+        "phone": "600987654",
+        "agencyName": "Costa Inmobiliaria"
+      }
   auth: inherit
 
 settings:

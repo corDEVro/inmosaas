@@ -1,5 +1,6 @@
 package com.inmosaas.controller;
 
+import com.inmosaas.dto.request.PropertyCreateDTO;
 import com.inmosaas.dto.response.PropertyResponseDTO;
 import com.inmosaas.mapper.DTOMapper;
 import com.inmosaas.model.Property;
@@ -53,12 +54,19 @@ public class PropertyController {
 
     // POST /api/properties/user/{userId} -> Guarda la entidad y devuelve el DTO filtrado
     @PostMapping("/user/{userId}")
-    public ResponseEntity<?> createProperty(@PathVariable UUID userId, @Valid @RequestBody Property property) {
+    public ResponseEntity<?> createProperty(@PathVariable UUID userId, @Valid @RequestBody PropertyCreateDTO propertyDTO) {
         return userRepository.findById(userId)
                 .map(user -> {
-                    property.setUser(user);
-                    Property savedProperty = propertyRepository.save(property);
-                    // Transformamos a DTO antes de responder al cliente
+                    // 1. Convertimos el DTO de entrada a entidad Property
+                    Property propertyEntity = dtoMapper.toPropertyEntity(propertyDTO);
+
+                    // 2. Vinculamos el usuario a la propiedad
+                    propertyEntity.setUser(user);
+
+                    // 3. Guardamos en la base de datos
+                    Property savedProperty = propertyRepository.save(propertyEntity)
+                            ;
+                    // 4. Devoñlvemos la respuesta formateada como DTO de salida
                     PropertyResponseDTO responseDTO = dtoMapper.toPropertyResponseDTO(savedProperty);
                     return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
                 })

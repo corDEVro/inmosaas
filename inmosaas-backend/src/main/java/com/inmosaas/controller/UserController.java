@@ -1,5 +1,6 @@
 package com.inmosaas.controller;
 
+import com.inmosaas.dto.request.UserCreateDTO;
 import com.inmosaas.dto.response.UserResponseDTO;
 import com.inmosaas.mapper.DTOMapper;
 import com.inmosaas.model.User;
@@ -37,14 +38,22 @@ public class UserController {
 
     // POST /api/users -> Crea usuario y devuelve UserResponseDTO sin password
     @PostMapping
-    public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
-        if (userRepository.existsByEmail(user.getEmail())) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserCreateDTO userDTO) {
+        if (userRepository.existsByEmail(userDTO.getEmail())) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body("El email ya está registrado");
         }
-        User savedUser = userRepository.save(user);
+
+        // 1. Convertimos el DTO a Entidad
+        User userEntity = dtoMapper.toUserEntity(userDTO);
+
+        // 2. Guardamos la entidad en la base de datos
+        User savedUser = userRepository.save(userEntity);
+
+        // 3. Convertimos la entidad guardada al DTO de respuesta seguro
         UserResponseDTO responseDTO = dtoMapper.toUserResponseDTO(savedUser);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 }

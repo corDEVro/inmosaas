@@ -8,6 +8,7 @@ import com.inmosaas.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,11 +20,14 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final DTOMapper dtoMapper;
+    private final PasswordEncoder passwordEncoder; // Inyectamos el encriptador
 
     // Inyectamos UserRepository y DTOMapper
-    public UserController(UserRepository userRepository, DTOMapper dtoMapper) {
+    public UserController(UserRepository userRepository, DTOMapper dtoMapper,
+                          PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.dtoMapper = dtoMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // GET /api/users -> Lista de usuarios mapeada a DTO
@@ -47,6 +51,10 @@ public class UserController {
 
         // 1. Convertimos el DTO a Entidad
         User userEntity = dtoMapper.toUserEntity(userDTO);
+
+        // 1B. ENCRIPTACION BCRYPT: Ciframos la contraseña antes de guardar en PostgreSQL
+        String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
+        userEntity.setPassword(encodedPassword);
 
         // 2. Guardamos la entidad en la base de datos
         User savedUser = userRepository.save(userEntity);

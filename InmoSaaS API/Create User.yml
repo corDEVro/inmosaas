@@ -10,11 +10,11 @@ http:
     type: json
     data: |-
       {
-        "name": "Ana Pérez",
-        "email": "ana-sin-arroba-inmosaas.com",
+        "name": "María Asesora",
+        "email": "maria@inmosaas.com",
         "password": "password123",
-        "phone": "600987654",
-        "agencyName": "Costa Inmobiliaria"
+        "phone": "600999888",
+        "agencyName": "InmoSaaS Premium"
       }
   auth: inherit
 

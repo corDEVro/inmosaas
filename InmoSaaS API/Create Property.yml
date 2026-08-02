@@ -5,19 +5,19 @@ info:
 
 http:
   method: POST
-  url: http://localhost:8080/api/properties/user/0baf1f81-5513-4b94-a8a0-7a78e25249cc
+  url: http://localhost:8080/api/properties/user/cc1a7e8b-ae85-4665-8b57-d67abeaa8b89
   body:
     type: json
     data: |-
       {
-        "title": "Ático luminoso en el centro",
-        "description": "Precioso ático reformado con terraza de 30m2 y vistas despejadas.",
-        "address": "Calle Mayor 15, 3ºA",
-        "city": "Madrid",
-        "price": 320000.00,
-        "bedrooms": 3,
-        "bathrooms": 2,
-        "squareMeters": 110
+        "title": "Chalet independiente con piscina",
+        "description": "Espectacular chalet de 4 plantas con jardín privado y garaje.",
+        "address": "Avenida del Sol 42",
+        "city": "Sevilla",
+        "price": 450000.00,
+        "bedrooms": 4,
+        "bathrooms": 3,
+        "squareMeters": 280
       }
   auth: inherit
 

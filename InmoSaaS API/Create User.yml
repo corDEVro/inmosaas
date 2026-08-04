@@ -10,11 +10,11 @@ http:
     type: json
     data: |-
       {
-        "name": "Pedro López",
-        "email": "pedro@inmosaas.com",
-        "password": "ClaveSuperSegura123",
-        "phone": "600555888",
-        "agencyName": "InmoSaaS State"
+        "name": "Prueba JWT",
+        "email": "test@inmosaas.com",
+        "password": "miPassword123",
+        "phone": "600111222",
+        "agencyName": "InmoSaaS Test"
       }
   auth: inherit
 

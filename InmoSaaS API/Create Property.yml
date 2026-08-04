@@ -19,7 +19,9 @@ http:
         "bathrooms": 3,
         "squareMeters": 280
       }
-  auth: inherit
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0ZXN0QGlubW9zYWFzLmNvbSIsInVzZXJJZCI6IjhiMDM5NThlLTA1MDktNGU5OC1iOGJiLTJmNTA2MjgzODNkOCIsImlhdCI6MTc4NTc3NDAxNiwiZXhwIjoxNzg1ODYwNDE2fQ.ndfUVVhQA7ZN4mMfIlxfwk6ysoI1aVc-fIGMamF7v_dUoEj9SH-5zH8_bNGe-hu6
 
 settings:
   encodeUrl: true

@@ -16,7 +16,11 @@ target/
 node_modules/
 dist/
 build/
-.env.local
+
+# Variables de entorno (nunca subir secretos)
+.env
+.env.*
+!.env.example
 
 # Logs
 *.log

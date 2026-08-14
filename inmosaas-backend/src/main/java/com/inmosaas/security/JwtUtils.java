@@ -4,6 +4,7 @@ package com.inmosaas.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +16,10 @@ import java.util.UUID;
 @Component
 public class JwtUtils {
 
-    // La clave secreta debe tener al menos 256 bits (32 caracteres) para el algoritmo HS256
-    private final String SECRET_KEY = "clave_secreta_super_segura_para_firmar_tokens_inmosaas_2026";
+    // La clave secreta debe tener al menos 256 bits (32 caracteres) para el algoritmo HS256.
+    // Se configura con la variable de entorno JWT_SECRET (o el valor por defecto de desarrollo).
+    @Value("${JWT_SECRET:dev-inmosaas-secret-change-me-in-production-2026}")
+    private String SECRET_KEY;
     private final long EXPIRATION_TIME = 86400000; // 24 horas en milisegundos
 
     private SecretKey getSingningKey() {

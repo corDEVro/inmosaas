@@ -5,9 +5,9 @@ services:
     container_name: inmosaas-db
     restart: always
     environment:
-      POSTGRES_DB: inmosaas_db
-      POSTGRES_USER: inmosaas_user
-      POSTGRES_PASSWORD: inmosaas_password
+      POSTGRES_DB: ${POSTGRES_DB:-inmosaas_db}
+      POSTGRES_USER: ${POSTGRES_USER:-inmosaas_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-inmosaas_password}
     ports:
       - "5432:5432"
     volumes:
